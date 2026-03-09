@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>animus-engine</Name>
+  <Repository>ghcr.io/animus-labs/animus-engine:latest</Repository>
+  <Registry>https://github.com/orgs/animus-labs/packages</Registry>
+  <Branch>
+    <Tag>latest</Tag>
+    <TagDescription>Latest stable release</TagDescription>
+  </Branch>
+  <Network>bridge</Network>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/craigtut/animus/issues</Support>
+  <Project>https://github.com/craigtut/animus</Project>
+  <Overview>Animus Engine is an autonomous AI assistant with persistent inner life, continuous agency, and a heartbeat-driven architecture. Unlike traditional assistants that exist only during interaction, Animus maintains continuous internal processes: thoughts, memories, emotions, and goals pursued across time. Self-hosted and single-user, each instance is your own.</Overview>
+  <Category>Productivity: Tools:</Category>
+  <WebUI>http://[IP]:[PORT:3000]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/craigtut/animus-unraid-template/main/animus-engine.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/craigtut/animus-unraid-template/main/icon.png</Icon>
+  <ExtraParams>--memory=8g --memory-reservation=512m</ExtraParams>
+  <Requires>An Anthropic API key (or other supported LLM provider key) is required.</Requires>
+  <DonateText/>
+  <DonateLink/>
+  <DonateImg/>
+
+  <!-- Web UI Port -->
+  <Config
+    Name="Web UI Port"
+    Target="3000"
+    Default="3000"
+    Mode="tcp"
+    Description="Port for the Animus web interface and API."
+    Type="Port"
+    Display="always"
+    Required="true"
+    Mask="false">3000</Config>
+
+  <!-- Data Volume -->
+  <Config
+    Name="Data Directory"
+    Target="/app/data"
+    Default="/mnt/user/appdata/animus-engine"
+    Mode="rw"
+    Description="Persistent storage for databases, logs, models, and configuration. Contains SQLite databases, LanceDB vectors, Hugging Face model cache, and log files."
+    Type="Path"
+    Display="always"
+    Required="true"
+    Mask="false">/mnt/user/appdata/animus-engine</Config>
+
+  <!-- Anthropic API Key -->
+  <Config
+    Name="Anthropic API Key"
+    Target="ANTHROPIC_API_KEY"
+    Default=""
+    Description="Your Anthropic API key for Claude. Required if using Claude as the agent provider (default)."
+    Type="Variable"
+    Display="always"
+    Required="false"
+    Mask="true"/>
+
+  <!-- OpenAI API Key (optional) -->
+  <Config
+    Name="OpenAI API Key"
+    Target="OPENAI_API_KEY"
+    Default=""
+    Description="Your OpenAI API key. Required only if using Codex as the agent provider."
+    Type="Variable"
+    Display="always"
+    Required="false"
+    Mask="true"/>
+
+  <!-- Log Level -->
+  <Config
+    Name="Log Level"
+    Target="LOG_LEVEL"
+    Default="info"
+    Description="Logging verbosity. Options: debug, info, warn, error."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">info</Config>
+
+  <!-- NODE_ENV (fixed) -->
+  <Config
+    Name="Node Environment"
+    Target="NODE_ENV"
+    Default="production"
+    Description="Should remain set to production."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">production</Config>
+
+  <!-- HOST (fixed) -->
+  <Config
+    Name="Host Binding"
+    Target="HOST"
+    Default="0.0.0.0"
+    Description="Network interface to bind to. Leave as 0.0.0.0 for Docker."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">0.0.0.0</Config>
+
+  <!-- PORT (fixed) -->
+  <Config
+    Name="Container Port"
+    Target="PORT"
+    Default="3000"
+    Description="Internal container port. Should match the target port above."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">3000</Config>
+
+  <!-- Data Dir (fixed) -->
+  <Config
+    Name="Data Directory (internal)"
+    Target="ANIMUS_DATA_DIR"
+    Default="/app/data"
+    Description="Internal path for data storage. Do not change unless you know what you are doing."
+    Type="Variable"
+    Display="advanced"
+    Required="false"
+    Mask="false">/app/data</Config>
+</Container>
