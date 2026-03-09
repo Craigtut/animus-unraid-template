@@ -9,8 +9,9 @@ Unraid Community Applications template for [Animus Engine](https://github.com/cr
 1. Open the **Apps** tab in Unraid
 2. Search for "Animus Engine"
 3. Click **Install**
-4. Fill in your API key and adjust settings
+4. Adjust settings if needed
 5. Click **Apply**
+6. Add your API key via the container's environment variables (see [Optional Environment Variables](#optional-environment-variables))
 
 ### Manual Template Install
 
@@ -26,40 +27,32 @@ Unraid Community Applications template for [Animus Engine](https://github.com/cr
 
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Web UI Port | 3000 | Port for the web interface |
-| Data Directory | /mnt/user/appdata/animus-engine | Persistent storage for databases, models, and logs |
-| Anthropic API Key | (empty) | Required if using Claude (default provider) |
-| OpenAI API Key | (empty) | Required only if using Codex provider |
+| Web UI Port | 3180 | Port for the web interface (maps to container port 3000) |
+| Data Directory | /mnt/user/appdata/animus | Persistent storage for databases, models, and logs |
 | Log Level | info | Options: debug, info, warn, error |
+
+## Optional Environment Variables
+
+These are not exposed in the template by default but can be added manually via the Unraid Docker container settings (click **Add another Path, Port, Variable, Label, or Device** and choose **Variable**).
+
+| Variable | Description |
+|----------|-------------|
+| `ANTHROPIC_API_KEY` | Your Anthropic API key for Claude. Required if using Claude as the agent provider (default). |
+| `OPENAI_API_KEY` | Your OpenAI API key. Required only if using Codex as the agent provider. |
+| `NODE_ENV` | Node environment. Defaults to `production` inside the container. |
+| `HOST` | Network interface to bind to. Defaults to `0.0.0.0`. |
+| `PORT` | Internal container port. Defaults to `3000`. |
+| `ANIMUS_DATA_DIR` | Internal data storage path. Defaults to `/app/data`. |
 
 ## Data Storage
 
-All persistent data is stored in the mapped data directory:
-
-- `databases/` - Seven SQLite databases (system, persona, heartbeat, memory, messages, agent_logs, contacts)
-- `databases/lancedb/` - Vector embeddings for semantic search
-- `huggingface_cache/` - Downloaded embedding models (BGE-small-en-v1.5)
-- `logs/` - Application log files
+All persistent data (databases, vector embeddings, model cache, and logs) is stored in the single mapped data directory. By default this is `/mnt/user/appdata/animus`.
 
 ## Requirements
 
 - Unraid 6.12+
 - At least 512MB RAM (8GB recommended for optimal performance)
-- An API key for your chosen LLM provider (Anthropic recommended)
-
-## Docker Image
-
-> **Note**: The Docker image reference (`ghcr.io/animus-labs/animus-engine`) is a placeholder. This will be updated once the image is published to a container registry.
-
-To build and push the image manually from the [Animus repository](https://github.com/craigtut/animus):
-
-```bash
-# Build for amd64 (typical Unraid architecture)
-docker buildx build --platform linux/amd64 -t ghcr.io/animus-labs/animus-engine:latest . --load
-
-# Push to registry
-docker push ghcr.io/animus-labs/animus-engine:latest
-```
+- An Anthropic or OpenAI account (subscription or API key)
 
 ## Links
 
