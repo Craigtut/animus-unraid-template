@@ -13,15 +13,16 @@ Unraid Community Applications template for [Animus Engine](https://github.com/cr
 5. Click **Apply**
 6. Add your API key via the container's environment variables (see [Optional Environment Variables](#optional-environment-variables))
 
-### Manual Template Install
+### Manual Install
 
-1. In Unraid, go to **Apps > Settings** (gear icon)
-2. Under **Template Repositories**, add:
+1. Download [`animus-engine.xml`](animus-engine.xml) from this repository
+2. Copy it to your Unraid flash drive at:
    ```
-   https://github.com/craigtut/animus-unraid-template
+   /boot/config/plugins/dockerMan/templates-user/animus-engine.xml
    ```
-3. Click **Save**
-4. Search for "Animus Engine" in the Apps tab
+3. In Unraid, go to **Docker > Add Container**
+4. Select "Animus Engine" from the template dropdown
+5. Adjust settings if needed and click **Apply**
 
 ## Configuration
 
@@ -51,7 +52,6 @@ All persistent data (databases, vector embeddings, model cache, and logs) is sto
 ## Requirements
 
 - Unraid 6.12+
-- At least 512MB RAM (8GB recommended for optimal performance)
 - An Anthropic or OpenAI account (subscription or API key)
 
 ## Links

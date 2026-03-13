@@ -17,7 +17,7 @@
   <WebUI>http://[IP]:[PORT:3180]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/craigtut/animus-unraid-template/main/animus-engine.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/craigtut/animus-unraid-template/main/icon.png</Icon>
-  <ExtraParams>--memory=8g --memory-reservation=512m</ExtraParams>
+  <ExtraParams/>
   <Requires>An Anthropic or OpenAI account (subscription or API key) is required.</Requires>
   <DonateText/>
   <DonateLink/>
